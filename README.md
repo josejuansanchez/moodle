@@ -158,7 +158,7 @@ openssl rand -base64 24 | tr -dc 'A-Za-z0-9'; echo           # para DB_PASS
 echo "$(openssl rand -base64 18 | tr -dc 'A-Za-z0-9')Aa1#"   # para MOODLE_ADMIN_PASS
 ```
 
-> **Comillas:** si un valor tiene espacios o símbolos, escríbelo entre
+> **Uso de comillas:** si un valor tiene espacios o símbolos, escríbelo entre
 > comillas simples: `MOODLE_ADMIN_PASS='Abc123#xyz'`.
 
 > **Nunca subas el `.env` a un repositorio.** Comparte solo `.env.example`.
@@ -211,6 +211,7 @@ que llevan contraseñas. Si una orden falla, el script se detiene en ese punto.
    renovación automática funcionará.
 
 > **¿Cómo valida Let's Encrypt el dominio?** (reto *HTTP-01*)
+>
 > Certbot deja un fichero temporal en el servidor y Let's Encrypt intenta
 > descargarlo desde `http://<dominio>/.well-known/acme-challenge/...`. Si lo
 > consigue, queda demostrado que controlas el dominio. Por eso el puerto 80
@@ -236,7 +237,9 @@ que llevan contraseñas. Si una orden falla, el script se detiene en ese punto.
 11. Programa el **cron** de Moodle (`templates/cron/moodle`).
 12. Recarga PHP-FPM para limpiar la caché de código.
 
-> **¿Por qué el instalador CLI?** Instalar desde el navegador obliga a
+> **¿Por qué el instalador CLI?**
+>
+> Instalar desde el navegador obliga a
 > rellenar formularios a mano. El instalador de línea de comandos recibe todos
 > los datos como parámetros (`--non-interactive`), así que la instalación se
 > puede **automatizar y repetir** siempre igual.
@@ -362,7 +365,7 @@ revisa **Administración del sitio → Notificaciones**.
 
 ### Empezar de cero
 
-> ⚠️ **Esto borra Moodle y todos sus datos.** Úsalo solo en instalaciones de
+> **Cuidado, esto borra Moodle y todos sus datos.** Úsalo solo en instalaciones de
 > prueba.
 
 ```bash
