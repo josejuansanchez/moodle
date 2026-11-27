@@ -55,6 +55,7 @@ Los tres scripts se ejecutan **en este orden**:
 | 3 | `03-deploy-moodle.sh` | Descarga Moodle, crea la base de datos y lo instala con su instalador CLI |
 
 > **¿Por qué el certificado va antes que Moodle?**
+> 
 > Moodle guarda su URL (`wwwroot`) al instalarse. Si HTTPS ya funciona en ese
 > momento, se instala directamente con `https://` y no hay que cambiar nada
 > después.
