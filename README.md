@@ -163,8 +163,7 @@ echo "$(openssl rand -base64 18 | tr -dc 'A-Za-z0-9')Aa1#"   # para MOODLE_ADMIN
 
 > **Nunca subas el `.env` a un repositorio.** Comparte solo `.env.example`.
 
-**¿Por qué tan pocas variables?** Solo están en el `.env` los datos que
-*cambian* de una instalación a otra. Las rutas estándar (`/var/www/moodle` y
+Solo están en el `.env` los datos que *cambian* de una instalación a otra. Las rutas estándar (`/var/www/moodle` y
 `/var/moodledata`) y los ajustes recomendados están fijados en los scripts y en
 las plantillas.
 
