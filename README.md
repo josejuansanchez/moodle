@@ -204,7 +204,7 @@ que llevan contraseñas. Si una orden falla, el script se detiene en ese punto.
 4. Instala **Certbot**, el cliente oficial de Let's Encrypt, mediante `snap`.
 5. Pide el **certificado**. Certbot, además:
    - crea el VirtualHost HTTPS (`moodle-le-ssl.conf`);
-   - redirige HTTP → HTTPS (`--redirect`);
+   - redirige HTTP a HTTPS (`--redirect`);
    - activa HSTS (`--hsts`), que indica al navegador que use siempre HTTPS.
 6. Simula una **renovación** (`certbot renew --dry-run`) para comprobar que la
    renovación automática funcionará.
@@ -292,7 +292,7 @@ Detalles importantes:
 | `php/99-moodle.ini` | copia | `/etc/php/<versión>/{fpm,cli}/conf.d/` | 01 |
 | `apache/security.conf` | copia | `/etc/apache2/conf-available/` | 01 |
 | `apache/moodle.conf` | `envsubst` | `/etc/apache2/sites-available/` | 02 |
-| `mysql/create-moodle-db.sql` | `envsubst` → `mysql` | (se ejecuta, no se guarda) | 03 |
+| `mysql/create-moodle-db.sql` | `envsubst` y se pasa a `mysql` | (se ejecuta, no se guarda) | 03 |
 | `cron/moodle` | `envsubst` | `/etc/cron.d/` | 03 |
 
 **Para cambiar un ajuste**, edita la plantilla y vuelve a ejecutar el script
