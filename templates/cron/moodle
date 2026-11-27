@@ -1,0 +1,10 @@
+# =============================================================================
+#  Cron de Moodle
+#  Destino: /etc/cron.d/moodle
+#  Plantilla: los scripts sustituyen WEB_USER y MOODLE_DIR con envsubst.
+#
+#  Moodle necesita ejecutar tareas periódicas (enviar correos, limpiar,
+#  copias de cursos...). Lo recomendado es lanzarlo cada minuto.
+# =============================================================================
+# m h dom mon dow  usuario      comando
+  * * *   *   *    ${WEB_USER}  /usr/bin/php ${MOODLE_DIR}/admin/cli/cron.php > /dev/null

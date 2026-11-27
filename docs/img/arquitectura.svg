@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="640" viewBox="0 0 1180 640" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura del despliegue de Moodle</title>
+  <desc id="desc">Los usuarios acceden por HTTPS a través del cortafuegos a Apache, que pasa las peticiones a PHP-FPM, donde se ejecuta Moodle. Moodle guarda la información en MySQL y los ficheros en moodledata. Cron ejecuta las tareas programadas. Certbot obtiene y renueva el certificado de Let's Encrypt.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#15803D"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      text { font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; fill: #0F172A; }
+      .h1   { font-size: 22px; font-weight: 700; }
+      .h2   { font-size: 13px; font-weight: 700; letter-spacing: .08em; fill: #475569; }
+      .t    { font-size: 15px; font-weight: 700; }
+      .s    { font-size: 12.5px; fill: #475569; }
+      .m    { font-size: 12px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; fill: #334155; }
+      .lbl  { font-size: 12px; font-weight: 600; fill: #334155; }
+      .lblg { font-size: 12px; font-weight: 600; fill: #15803D; }
+      .box  { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 1.2; }
+      .flow { fill: none; stroke: #334155; stroke-width: 2; }
+      .cert { fill: none; stroke: #15803D; stroke-width: 2; stroke-dasharray: 6 5; }
+    </style>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="1180" height="640" rx="16" fill="#F8FAFC"/>
+
+  <!-- Título -->
+  <text x="40" y="48" class="h1">Arquitectura del despliegue de Moodle</text>
+  <text x="40" y="72" class="s">Un único servidor Ubuntu con pila LAMP y HTTPS de Let's Encrypt</text>
+
+  <!-- ===================== Elementos externos ===================== -->
+  <text x="40" y="128" class="h2">INTERNET</text>
+
+  <!-- Usuarios -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="150" width="170" height="90" rx="10" class="box"/>
+  </g>
+  <rect x="40" y="150" width="6" height="90" rx="3" fill="#2563EB"/>
+  <rect x="60" y="166" width="30" height="22" rx="3" fill="none" stroke="#2563EB" stroke-width="2"/>
+  <line x1="60" y1="173" x2="90" y2="173" stroke="#2563EB" stroke-width="2"/>
+  <text x="60" y="212" class="t">Usuarios</text>
+  <text x="60" y="230" class="s">Navegador web</text>
+
+  <!-- Let's Encrypt -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="420" width="170" height="104" rx="10" class="box"/>
+  </g>
+  <rect x="40" y="420" width="6" height="104" rx="3" fill="#15803D"/>
+  <rect x="62" y="444" width="22" height="16" rx="3" fill="#15803D"/>
+  <path d="M66,444 v-5 a7,7 0 0 1 14,0 v5" fill="none" stroke="#15803D" stroke-width="2.5"/>
+  <text x="60" y="482" class="t">Let's Encrypt</text>
+  <text x="60" y="500" class="s">Autoridad de</text>
+  <text x="60" y="516" class="s">certificación</text>
+
+  <!-- ===================== Servidor ===================== -->
+  <rect x="330" y="105" width="810" height="470" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="420" y="133" class="h2">SERVIDOR UBUNTU 26.04 LTS</text>
+
+  <!-- Cortafuegos -->
+  <rect x="350" y="150" width="36" height="405" rx="8" fill="#1E293B"/>
+  <text transform="translate(373 352) rotate(-90)" text-anchor="middle" style="fill:#F8FAFC;font-size:13px;font-weight:700;letter-spacing:.06em">CORTAFUEGOS UFW · 22 · 80 · 443</text>
+
+  <!-- Apache -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="150" width="220" height="150" rx="10" class="box"/>
+  </g>
+  <rect x="420" y="150" width="6" height="150" rx="3" fill="#C2410C"/>
+  <text x="440" y="178" class="t">Apache 2.4</text>
+  <text x="440" y="196" class="s">mpm_event · HTTP/2</text>
+  <rect x="440" y="210" width="182" height="34" rx="6" fill="#ECFDF5" stroke="#A7F3D0"/>
+  <text x="452" y="232" class="m">:443  HTTPS (TLS)</text>
+  <rect x="440" y="252" width="182" height="34" rx="6" fill="#F1F5F9" stroke="#E2E8F0"/>
+  <text x="452" y="274" class="m">:80   → 301 HTTPS</text>
+
+  <!-- PHP-FPM + Moodle -->
+  <g filter="url(#shadow)">
+    <rect x="710" y="150" width="200" height="150" rx="10" class="box"/>
+  </g>
+  <rect x="710" y="150" width="6" height="150" rx="3" fill="#6D28D9"/>
+  <text x="730" y="178" class="t">PHP-FPM 8.5</text>
+  <text x="730" y="196" class="s">OPcache</text>
+  <rect x="730" y="210" width="162" height="76" rx="6" fill="#FFF7ED" stroke="#FED7AA"/>
+  <text x="742" y="234" class="t" style="fill:#C2410C">Moodle 5.3</text>
+  <text x="742" y="254" class="m">/var/www/moodle</text>
+  <text x="742" y="272" class="s">web: solo public/</text>
+
+  <!-- Grupo de datos -->
+  <rect x="945" y="150" width="180" height="305" rx="10" fill="#F1F5F9" stroke="#CBD5E1" stroke-dasharray="5 4"/>
+  <text x="960" y="174" class="h2">DATOS</text>
+
+  <!-- MySQL -->
+  <g filter="url(#shadow)">
+    <rect x="958" y="188" width="154" height="110" rx="10" class="box"/>
+  </g>
+  <rect x="958" y="188" width="6" height="110" rx="3" fill="#0E7490"/>
+  <ellipse cx="988" cy="208" rx="13" ry="5" fill="none" stroke="#0E7490" stroke-width="2"/>
+  <path d="M975,208 v16 a13,5 0 0 0 26,0 v-16" fill="none" stroke="#0E7490" stroke-width="2"/>
+  <text x="976" y="254" class="t">MySQL 8.4</text>
+  <text x="976" y="272" class="s">BD «moodle»</text>
+  <text x="976" y="288" class="s">utf8mb4</text>
+
+  <!-- moodledata -->
+  <g filter="url(#shadow)">
+    <rect x="958" y="318" width="154" height="120" rx="10" class="box"/>
+  </g>
+  <rect x="958" y="318" width="6" height="120" rx="3" fill="#B45309"/>
+  <path d="M976,336 h10 l4,5 h16 v20 h-30 z" fill="none" stroke="#B45309" stroke-width="2" stroke-linejoin="round"/>
+  <text x="976" y="384" class="t">moodledata</text>
+  <text x="976" y="402" class="s">Ficheros subidos,</text>
+  <text x="976" y="418" class="s">cachés y sesiones</text>
+
+  <!-- Certbot -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="420" width="220" height="110" rx="10" class="box"/>
+  </g>
+  <rect x="420" y="420" width="6" height="110" rx="3" fill="#15803D"/>
+  <text x="440" y="448" class="t">Certbot</text>
+  <text x="440" y="468" class="s">Obtiene y renueva</text>
+  <text x="440" y="486" class="s">el certificado TLS</text>
+  <text x="440" y="512" class="m">/etc/letsencrypt</text>
+
+  <!-- Cron -->
+  <g filter="url(#shadow)">
+    <rect x="710" y="420" width="200" height="110" rx="10" class="box"/>
+  </g>
+  <rect x="710" y="420" width="6" height="110" rx="3" fill="#475569"/>
+  <circle cx="882" cy="444" r="11" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M882,437 v7 l5,3" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+  <text x="730" y="448" class="t">cron</text>
+  <text x="730" y="468" class="s">Tareas programadas</text>
+  <text x="730" y="486" class="s">de Moodle, cada minuto</text>
+  <text x="730" y="512" class="m">admin/cli/cron.php</text>
+
+  <!-- ===================== Flujos ===================== -->
+  <!-- Usuarios -> Apache :443 -->
+  <path d="M210,227 H437" class="flow" marker-end="url(#arrow)"/>
+  <text x="225" y="217" class="lbl">HTTPS</text>
+
+  <!-- Apache -> PHP-FPM -->
+  <path d="M640,225 H707" class="flow" marker-end="url(#arrow)"/>
+  <text x="648" y="215" class="lbl">FastCGI</text>
+
+  <!-- PHP-FPM -> Datos -->
+  <path d="M910,243 H955" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- Cron -> Datos -->
+  <path d="M910,475 H1035 V458" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- Let's Encrypt -> Apache :80 (reto HTTP-01) -->
+  <path d="M210,440 H402 V269 H437" class="cert" marker-end="url(#arrow-green)"/>
+  <text x="222" y="408" class="lblg">Reto HTTP-01</text>
+  <text x="222" y="424" class="lblg">(puerto 80)</text>
+
+  <!-- Certbot -> Let's Encrypt (API ACME) -->
+  <path d="M420,490 H213" class="cert" marker-end="url(#arrow-green)"/>
+  <text x="222" y="510" class="lblg">Pide / renueva</text>
+
+  <!-- Certbot -> Apache (instala certificado) -->
+  <path d="M530,420 V303" class="cert" marker-end="url(#arrow-green)"/>
+  <text x="540" y="372" class="lblg">Instala el</text>
+  <text x="540" y="388" class="lblg">certificado</text>
+
+  <!-- ===================== Leyenda ===================== -->
+  <line x1="40" y1="605" x2="80" y2="605" class="flow"/>
+  <text x="90" y="609" class="s">Tráfico de la aplicación</text>
+  <line x1="280" y1="605" x2="320" y2="605" class="cert"/>
+  <text x="330" y="609" class="s">Gestión del certificado TLS</text>
+</svg>
